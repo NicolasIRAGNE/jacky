@@ -10,6 +10,7 @@
  */
 
 #include "logger.h"
+#include <utility>
 #include <cassert>
 #include <ctime>
 #include <sstream>

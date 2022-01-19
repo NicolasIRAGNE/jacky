@@ -7,6 +7,7 @@
  * @copyright Copyright Alyce (c) 2022
  */
 
+#pragma once
 #include <cstdint>
 
 namespace jacky
@@ -36,4 +37,4 @@ private:
 using Register8 = Register<uint8_t>;
 using Register16 = Register<uint16_t>;
 using RegisterF = Register<float>;
-}
+} // namespace jacky

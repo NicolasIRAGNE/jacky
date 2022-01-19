@@ -10,9 +10,11 @@
 #include "cpu.h"
 
 jacky::Cpu::Cpu()
-    : memory(0xFFFF)
-    , running(false)
-    , pc(0x0000)
-    , sp(0xFFFF)
 {
+}
+
+int jacky::Cpu::step()
+{
+    
+    return 0;
 }

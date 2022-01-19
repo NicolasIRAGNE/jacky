@@ -700,3 +700,4 @@ FodyWeavers.xsd
 build
 out
 install
+cpp-cppcheck-build-dir

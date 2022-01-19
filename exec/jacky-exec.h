@@ -7,6 +7,7 @@
  * @copyright Copyright Alyce (c) 2022
  */
 
+#pragma once
 #include "logger.h"
 
 namespace jacky

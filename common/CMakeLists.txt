@@ -4,6 +4,11 @@ project(libjacky VERSION 0.0.1)
 
 add_library(libjacky STATIC)
 
+set_target_properties(libjacky PROPERTIES
+    CXX_STANDARD 20
+    CXX_STANDARD_REQUIRED ON
+)
+
 target_sources(libjacky
     PRIVATE
         logger.cpp
