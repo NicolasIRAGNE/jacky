@@ -7,6 +7,7 @@ option(JACKY_BUILD_EXEC "Build jacky-exec" ON)
 option(JACKY_BUILD_TESTS "Build unit tests" ON)
 
 add_subdirectory(common)
+add_subdirectory(3rdparty)
 
 if (JACKY_BUILD_ASM)
     add_subdirectory(asm)

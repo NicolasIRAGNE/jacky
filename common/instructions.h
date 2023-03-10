@@ -10,18 +10,15 @@
 #pragma once
 #include "cpu.h"
 #include <functional>
+#include <string>
 
-namespace jacky
+namespace jacky::instructions
 {
-namespace instructions
+class Instruction
 {
-    class Instruction
-    {
-    private:
-        std::string name;
-    public:
-        std::function<void(Cpu&)> execute;
-    };
+private:
+    std::function<void(Cpu&)> m_execute;
+    std::string               m_name;
+};
 
-} // namespace instructions
-} // namespace jacky
+} // namespace jacky::instructions

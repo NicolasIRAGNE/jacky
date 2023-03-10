@@ -1,0 +1,6 @@
+{
+    "cSpell.words": [
+        "jacky"
+    ],
+    "sonarlint.pathToCompileCommands": "${workspaceFolder}\\build\\compile_commands.json"
+}

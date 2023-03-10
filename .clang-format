@@ -1,5 +1,6 @@
-﻿---
-BasedOnStyle: WebKit
+﻿BasedOnStyle: WebKit
 BreakBeforeBraces: Allman
-
-...
+NamespaceIndentation: None
+AlignAfterOpenBracket: Align
+AlignConsecutiveAssignments: 'true'
+AlignConsecutiveDeclarations: 'true'

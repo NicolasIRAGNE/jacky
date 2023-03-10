@@ -10,43 +10,59 @@
 #pragma once
 #include "register.h"
 #include <cstdint>
+#include <limits>
+#include <map>
+#include <stdexcept>
+#include <string>
 #include <vector>
 
 namespace jacky
 {
+
+class unsupported_opcode : public std::runtime_error
+{
+private:
+    uint8_t m_opcode;
+
+public:
+    explicit unsupported_opcode(uint8_t opcode)
+        : std::runtime_error("unsupported opcode " + std::to_string(opcode))
+        , m_opcode(opcode)
+    {
+    }
+
+    uint8_t opcode() const
+    {
+        return m_opcode;
+    }
+};
+
+using opcode_t = uint8_t;
+
 class Cpu
 {
 public:
-    Cpu();
-    /**
-     * @brief Load a compiled program into memory.
-     */
-    void load(const std::vector<uint8_t>& program);
-    void run();
+    template <opcode_t opcode>
+    void opcode_handler()
+    {
+        throw unsupported_opcode(opcode);
+    }
 
 private:
-    /// Mapping of the memory that is addressable by the CPU. Note that this mapping is not physically contiguous.
-    std::vector<uint8_t> memory = std::vector<uint8_t>(0xFFFF);
-    bool running { false };
+    std::map<opcode_t, void (Cpu::*)()> m_opcode_handlers;
 
-    struct
-    {
-        /// Counter to what the CPU is currently executing from memory.
-        jacky::Register16 pc { 0x0000 };
-        /// Pointer to the top of the stack. It starts at 0xFFFF and goes down.
-        jacky::Register16 sp { 0xFFFF };
-        /// 16 bit register used to work with pointers
-        jacky::Register16 h { 0x0000 };
+public:
+    Cpu();
+    virtual ~Cpu() = default;
 
-        /// Flag register
-        jacky::Register8 f { 0x00 };
+    void execute(opcode_t opcode);
 
-        jacky::Register16 a { 0x0000 };
-        jacky::Register8 b { 0x00 };
-        jacky::Register8 c { 0x00 };
-        jacky::Register8 d { 0x00 };
-    } registers;
-
-    int step();
+private:
+    bool     m_halted { false };
+    opcode_t m_loaded_opcode { std::numeric_limits<opcode_t>::min() };
 };
-}
+
+template <>
+void Cpu::opcode_handler<0x00>(); // NOP
+
+} // namespace jacky

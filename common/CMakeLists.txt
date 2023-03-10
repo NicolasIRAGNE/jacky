@@ -2,19 +2,15 @@ cmake_minimum_required(VERSION 3.20)
 
 project(libjacky VERSION 0.0.1)
 
-add_library(libjacky STATIC)
+add_library(libjacky)
 
-set_target_properties(libjacky PROPERTIES
-    CXX_STANDARD 20
-    CXX_STANDARD_REQUIRED ON
-)
+target_compile_definitions(libjacky PUBLIC cxx_std_20)
+set_target_properties(libjacky PROPERTIES CXX_EXTENSIONS ON)
 
 target_sources(libjacky
     PRIVATE
-        logger.cpp
         cpu.cpp
     PUBLIC
-        logger.h
         register.h
         cpu.h
 )
@@ -22,6 +18,12 @@ target_sources(libjacky
 target_include_directories(libjacky PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}
 )
+
+target_link_libraries(libjacky PUBLIC
+    spdlog::spdlog
+)
+
+add_subdirectory(cpus)
 
 install(TARGETS libjacky
     RUNTIME DESTINATION bin

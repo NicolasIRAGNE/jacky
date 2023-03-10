@@ -1,31 +1,36 @@
 /**
  * @file main.cpp
- * @author Nicolas IRAGNE (nicolas.iragne@alyce.fr)
- * @brief 
+ * @author Nicolas IRAGNE (nicoragne@hotmail.fr)
+ * @brief
  * @date 2022-01-19
- * 
- * @copyright Copyright Alyce (c) 2022
+ *
+ * @copyright Copyright niragne (c) 2022
  */
 
-#include "logger.h"
-#include "jacky-exec.h"
+#include "exec.h"
+#include <spdlog/spdlog.h>
+#include "cpu.h"
+#include "cpus/v1/v1.h"
+#include <limits>
 
-namespace jacky
+int main()
 {
-    namespace exec
+    spdlog::info("Hello, World!");
+    auto v1 = jacky::cpus::V1();
+    std::vector<jacky::opcode_t> program = {
+        0x00, 0x00, 0x00, 0x00, // NOP
+        0x01,
+    };
+    for (auto& opcode : program)
     {
-        jacky::Logger logger_g("jacky-exec");
+        try
+        {
+            v1.execute(opcode);
+        }
+        catch (const std::exception& e)
+        {
+            spdlog::error("Error: {}", e.what());
+        }
     }
-}
-
-jacky::Logger& jacky::exec::logger()
-{
-    return jacky::exec::logger_g;
-}
-
-int main(int argc, char **argv)
-{
-    jacky::exec::logger().log_info("Initializing jacky-exec...");
-    jacky::exec::logger().log_info("Done.");
     return 0;
 }
